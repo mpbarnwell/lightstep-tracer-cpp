@@ -60,6 +60,8 @@ class ImmutableSpanContext final : public LightStepSpanContext {
     return this->InjectImpl(propagation_options, writer);
   }
 
+  std::unique_ptr<opentracing::SpanContext> Clone() const noexcept override;
+
  private:
   uint64_t trace_id_high_;
   uint64_t trace_id_low_;

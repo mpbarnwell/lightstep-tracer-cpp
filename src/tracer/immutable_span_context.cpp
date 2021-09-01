@@ -51,4 +51,18 @@ void ImmutableSpanContext::ForeachBaggageItem(
     }
   }
 }
+
+//--------------------------------------------------------------------------------------------------
+// Clone
+//--------------------------------------------------------------------------------------------------
+std::unique_ptr<opentracing::SpanContext> ImmutableSpanContext::Clone()
+const noexcept try {
+  std::unique_ptr<opentracing::SpanContext> result{
+    new ImmutableSpanContext{trace_id_high_, trace_id_low_, span_id_,
+                             IsTraceFlagSet<SampledFlagMask>(this->trace_flags()),
+                             BaggageProtobufMap{baggage_}}};
+  return result;
+} catch (const std::exception& /*e*/) {
+  return nullptr;
+}
 }  // namespace lightstep

@@ -4,6 +4,17 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+http_archive(
+    name = "bazel_skylib",
+    urls = [
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.0.3/bazel-skylib-1.0.3.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.0.3/bazel-skylib-1.0.3.tar.gz",
+    ],
+    sha256 = "1c531376ac7e5a180e0237938a2536de0c54d93f5c278634818e0efc952dd56c",
+)
+load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
+bazel_skylib_workspace()
+
 # In order to statically link in the standard c++ library to produce portable binaries, we need
 # to wrap the compiler command to work around
 # See https://github.com/bazelbuild/bazel/issues/4644
@@ -24,13 +35,13 @@ rules_foreign_cc_dependencies([
 git_repository(
     name = "io_opentracing_cpp",
     remote = "https://github.com/opentracing/opentracing-cpp",
-    commit = "ac50154a7713877f877981c33c3375003b6ebfe1",
+    commit = "4bb431f7728eaf383a07e86f9754a5b67575dab0",
 )
 
 git_repository(
     name = "com_google_protobuf",
     remote = "https://github.com/protocolbuffers/protobuf.git",
-    commit = "498de9f761bef56a032815ee44b6e6dbe0892cc4",
+    commit = "909a0f36a10075c4b4bc70fdee2c7e32dd612a72",
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")

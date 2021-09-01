@@ -123,6 +123,8 @@ struct JsonValueVisitor {
 
   void operator()(const std::string& s) { WriteEscapedString(writer, s); }
 
+  void operator()(opentracing::string_view s) { WriteEscapedString(writer, s); }
+
   void operator()(std::nullptr_t) { writer << "null"; }
 
   void operator()(const char* s) { WriteEscapedString(writer, s); }
